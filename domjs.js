@@ -8,3 +8,81 @@ const form=document.createElement("form");
 const divparent=document.createElement("div");
 document.body.appendChild(divparent);
 divparent.setAttribute("class","container");
+const divform=document.createElement("div");
+divparent.appendChild(divform);
+divform.setAttribute("class","form");
+divform.appendChild(form);
+const input_somme=document.createElement("input");
+input_somme.setAttribute("class","somme");
+input_somme.setAttribute("id","somme");
+input_somme.setAttribute("type","number");
+input_somme.setAttribute("name","somme");
+input_somme.setAttribute("required",true);
+input_somme.setAttribute("placeholder","ex:100$");
+form.appendChild(input_somme);
+const devise_cdf=document.createElement("input");
+devise_cdf.setAttribute("type","radio");
+devise_cdf.setAttribute("id","devise_cdf");
+devise_cdf.setAttribute("name","devise");
+devise_cdf.setAttribute("value","franc congolais");
+form.appendChild(devise_cdf);
+const label_cdf=document.createElement("label");
+label_cdf.setAttribute("for","devise_cdf");
+label_cdf.textContent="CDF";
+form.appendChild(label_cdf);
+const devise_usd=document.createElement("input");
+devise_usd.setAttribute("type","radio");
+devise_usd.setAttribute("id","devise_usd");
+devise_usd.setAttribute("name","devise");
+devise_usd.setAttribute("value","dollars");
+form.appendChild(devise_usd);
+const label_usd=document.createElement("label");
+label_usd.setAttribute("for","devise_usd");
+label_usd.textContent="USD";
+form.appendChild(label_usd);    
+const label_source=document.createElement("label");
+form.appendChild(label_source);
+label_source.textContent="Expediteur";
+label_source.setAttribute("id","ex");
+const select_source=document.createElement("select");
+select_source.setAttribute("name","source");
+select_source.setAttribute("id","source");
+form.appendChild(select_source);
+const options=["zando","kintambo","bandal","masina","limete"];
+const label_desti=document.createElement("label");
+label_desti.setAttribute("for","desti");
+label_desti.textContent="destinateur";
+label_desti.setAttribute("id","des")
+form.appendChild(label_desti);
+const select_desti=document.createElement("select");
+select_desti.setAttribute("name","desti");
+select_desti.setAttribute("id","desti");
+form.appendChild(select_desti);
+const bottom=document.createElement("input");
+bottom.setAttribute("type","submit");
+bottom.setAttribute("value","valider");
+form.appendChild(bottom);
+for (let i=0;i<options.length;i++){
+    const option=document.createElement("option");
+    option.setAttribute("value",options[i]);
+    option.textContent=options[i];
+    const option_desti=document.createElement("option");
+    option_desti.setAttribute("value",options[i]);
+    option_desti.textContent=options[i];
+    select_source.appendChild(option);
+    select_desti.appendChild(option_desti);
+}
+form.addEventListener("submit",function(event){
+    event.preventDefault();
+    let somme= input_somme.value;
+    alert(somme);
+    
+})
+
+
+
+
+
+
+
+
