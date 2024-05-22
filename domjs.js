@@ -75,9 +75,31 @@ for (let i=0;i<options.length;i++){
 form.addEventListener("submit",function(event){
     event.preventDefault();
     let somme= input_somme.value;
-    alert(somme);
+    alert(comission(somme));
     
 })
+let cash_cdf=1000000000000;
+let cash_usd=1000000000000;
+const pourcentage=2;
+function comission(somme){
+    const result=somme*pourcentage/100;
+    return result
+}
+
+function verif_solde(_somme,_devise){
+     if (_devise===devise_usd.value){
+        if(_somme>cash_usd){
+            return false;
+        }
+        return true;
+     }
+     if (_devise===devise_cdf.value){
+        if(_somme>cash_cdf){
+            return false;
+        }
+        return true;
+     }
+}
 
 
 
