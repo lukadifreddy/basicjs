@@ -1,10 +1,7 @@
 const operateurs=['DESTINATEUR','EXPEDITEUR'];
-
-
-
 const devises=['USD','CDF'];
 const options=["zando","kintambo","bandal","masina","limete"];
-let cash_cdf=1000000000000;
+let cash_cdf=1000000;
 let cash_usd=1000000000000;
 const pourcentage=2;
 function comission(somme){
@@ -26,11 +23,10 @@ function verif_solde(_somme,_devise){
         return true;
      }
 }
-
-
-
-
-
+const affichage_usd=document.getElementById("dollars");
+affichage_usd.textContent+=cash_usd
+const affichage_cdf=document.getElementById("franc_congolais");
+affichage_cdf.textContent+=cash_cdf
 const header=document.createElement("div");
 header.setAttribute("class","header");
 document.body.appendChild(header);
@@ -53,26 +49,6 @@ input_somme.setAttribute("name","somme");
 input_somme.setAttribute("required",true);
 input_somme.setAttribute("placeholder","ex:100$");
 form.appendChild(input_somme);
-// const devise_cdf=document.createElement("input");
-// devise_cdf.setAttribute("type","radio");
-// devise_cdf.setAttribute("id","devise_cdf");
-// devise_cdf.setAttribute("name","devise");
-// devise_cdf.setAttribute("value","franc congolais");
-// form.appendChild(devise_cdf);
-// const label_cdf=document.createElement("label");
-// label_cdf.setAttribute("for","devise_cdf");
-// label_cdf.textContent="CDF";
-// form.appendChild(label_cdf);
-// const devise_usd=document.createElement("input");
-// devise_usd.setAttribute("type","radio");
-// devise_usd.setAttribute("id","devise_usd");
-// devise_usd.setAttribute("name","devise");
-// devise_usd.setAttribute("value","dollars");
-// form.appendChild(devise_usd);
-// const label_usd=document.createElement("label");
-// label_usd.setAttribute("for","devise_usd");
-// label_usd.textContent="USD";
-// form.appendChild(label_usd); 
 const div_devises=document.createElement("div");
 div_devises.setAttribute("id","devises");
 devises.forEach(devise => {
@@ -86,26 +62,9 @@ devises.forEach(devise => {
     input_devise.setAttribute("name","devise");
     input_devise.setAttribute("value",devise);
     div_devises.appendChild(input_devise);
-    
+
 }); 
 form.appendChild(div_devises);  
-// const label_source=document.createElement("label");
-// form.appendChild(label_source);
-// label_source.textContent="Expediteur";
-// label_source.setAttribute("id","ex");
-// const select_source=document.createElement("select");
-// select_source.setAttribute("name","source");
-// select_source.setAttribute("id","source");
-// form.appendChild(select_source);
-// const label_desti=document.createElement("label");
-// label_desti.setAttribute("for","desti");
-// label_desti.textContent="destinateur";
-// label_desti.setAttribute("id","des")
-// form.appendChild(label_desti);
-// const select_desti=document.createElement("select");
-// select_desti.setAttribute("name","desti");
-// select_desti.setAttribute("id","desti");
-// form.appendChild(select_desti);
 const div_operateur=document.createElement("div");
 div_operateur.setAttribute("id","operateur");
 operateurs.forEach(operateur=>{
@@ -129,18 +88,6 @@ const bottom=document.createElement("input");
 bottom.setAttribute("type","submit");
 bottom.setAttribute("value","valider");
 form.appendChild(bottom);
-
-// for (let i=0;i<options.length;i++){
-//     const option=document.createElement("option");
-//     option.setAttribute("value",options[i]);
-//     option.textContent=options[i];
-//     const option_desti=document.createElement("option");
-//     option_desti.setAttribute("value",options[i]);
-//     option_desti.textContent=options[i];
-//     select_source.appendChild(option);
-//     select_desti.appendChild(option_desti);
-// }
-
 form.addEventListener("submit",function(event){
     event.preventDefault();
     let somme= input_somme.value;
