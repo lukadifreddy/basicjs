@@ -110,30 +110,37 @@ const div_operateur=document.createElement("div");
 div_operateur.setAttribute("id","operateur");
 operateurs.forEach(operateur=>{
     const label_source=document.createElement("label");
-    form.appendChild(label_source);
+    div_operateur.appendChild(label_source);
     label_source.textContent= operateur;
     label_source.setAttribute("id","operateur");
     const select_source=document.createElement("select");
     select_source.setAttribute("name",operateur);
     select_source.setAttribute("id",operateur);
-    form.appendChild(select_source);
-
+    options.forEach(option=>{
+        const option_select=document.createElement("option");
+        option_select.setAttribute("value",option);
+        option_select.textContent=option;        
+        select_source.appendChild(option_select);
+    })
+    div_operateur.appendChild(select_source);
 })
 form.appendChild(div_operateur);
 const bottom=document.createElement("input");
 bottom.setAttribute("type","submit");
 bottom.setAttribute("value","valider");
 form.appendChild(bottom);
-for (let i=0;i<options.length;i++){
-    const option=document.createElement("option");
-    option.setAttribute("value",options[i]);
-    option.textContent=options[i];
-    const option_desti=document.createElement("option");
-    option_desti.setAttribute("value",options[i]);
-    option_desti.textContent=options[i];
-    select_source.appendChild(option);
-    select_desti.appendChild(option_desti);
-}
+
+// for (let i=0;i<options.length;i++){
+//     const option=document.createElement("option");
+//     option.setAttribute("value",options[i]);
+//     option.textContent=options[i];
+//     const option_desti=document.createElement("option");
+//     option_desti.setAttribute("value",options[i]);
+//     option_desti.textContent=options[i];
+//     select_source.appendChild(option);
+//     select_desti.appendChild(option_desti);
+// }
+
 form.addEventListener("submit",function(event){
     event.preventDefault();
     let somme= input_somme.value;
