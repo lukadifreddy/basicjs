@@ -1,3 +1,6 @@
+const mes_donnees=require("./mydata.js");
+
+console.log(mes_donnees);
 const operateurs=['DESTINATEUR','EXPEDITEUR'];
 const devises=['USD','CDF'];
 const options=["zando","kintambo","bandal","masina","limete"];
