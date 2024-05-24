@@ -1,11 +1,27 @@
-const mes_donnees=require("./mydata.js");
-
-console.log(mes_donnees);
 const operateurs=['DESTINATEUR','EXPEDITEUR'];
 const devises=['USD','CDF'];
 const options=["zando","kintambo","bandal","masina","limete"];
 let cash_cdf=1000000;
 let cash_usd=1000000000000;
+const my_data=[{
+    'id':1,
+    'somme':10000,
+    'devise':"cdf",
+    'destinateur':"zando",
+    'expediteur':"kintambo",
+},{
+    'id':2,
+    'somme':10000,
+    'devise':"usd",
+    'destinateur':"masina",
+    'expediteur':"limete",
+},{
+    'id':3,
+    'somme':10000,
+    'devise':"usd",
+    'destinateur':"bandal",
+    'expediteur':"kintambo",
+}];
 const pourcentage=2;
 function comission(somme){
     const result=somme*pourcentage/100;
@@ -17,15 +33,36 @@ function verif_solde(_somme,_devise){
         if(_somme>cash_usd){
             return false;
         }
-        return true;
+        return revenus(_somme,_devise);
      }
      if (_devise===devise_cdf.value){
         if(_somme>cash_cdf){
             return false;
         }
-        return true;
+        return revenus(_somme,_devise);
      }
 }
+function revenus (somme,devise){
+     return devise+=comission (somme); 
+};
+function ajouts_donnees(somme,devise,destinateur,expediteur){
+    let max_id=my_data.reduce(
+        function (max,donnee){
+            return (donnee.id>max?donnee.id:max);
+        },0
+    )
+    my_data.push({
+    'id':max_id+1,
+    'somme':somme,
+    'devise':devise,
+    'destinateur':destinateur,
+    'expediteur':expediteur,
+    })
+};
+
+
+
+
 const affichage_usd=document.getElementById("dollars");
 affichage_usd.textContent+=cash_usd
 const affichage_cdf=document.getElementById("franc_congolais");
@@ -94,7 +131,7 @@ form.appendChild(bottom);
 form.addEventListener("submit",function(event){
     event.preventDefault();
     let somme= input_somme.value;
-    alert(comission(somme));
+   
     
 })
 
