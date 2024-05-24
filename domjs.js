@@ -29,28 +29,44 @@ function comission(somme){
 }
 
 function verif_solde(_somme,_devise){
-     if (_devise===devise_usd.value){
+     if (_devise===devises[0]){
         if(_somme>cash_usd){
+            alert("nous n'avons pas assez de solde ");
             return false;
         }
-        return revenus(_somme,_devise);
+        
+        return revenus(comission(_somme),_devise);
      }
-     if (_devise===devise_cdf.value){
+     if (_devise===devises[1]){
         if(_somme>cash_cdf){
+            alert("nous n'avons pas assez de solde ");
             return false;
         }
-        return revenus(_somme,_devise);
+        return revenus(comission(_somme),_devise);
      }
 }
-function revenus (somme,devise){
-     return devise+=comission (somme); 
+function revenus (comission,devise){
+    if (devise===devises[0]){
+         cash_usd+=comission;
+         affichage_usd.textContent="cash_dollars:"+cash_usd;
+         return  cash_usd
+    }
+    if (devise===devises[1]){
+         cash_cdf+=comission;
+         affichage_cdf.textContent="cash_franc_congolais:"+cash_cdf;
+         return  cash_cdf
+    }
+     return null; 
 };
 function ajouts_donnees(somme,devise,destinateur,expediteur){
+    if(!verif_solde(somme,devise)){
+        return alert('operation annuler!!!!')
+    }
     let max_id=my_data.reduce(
         function (max,donnee){
             return (donnee.id>max?donnee.id:max);
         },0
-    )
+    )    
     my_data.push({
     'id':max_id+1,
     'somme':somme,
@@ -58,6 +74,8 @@ function ajouts_donnees(somme,devise,destinateur,expediteur){
     'destinateur':destinateur,
     'expediteur':expediteur,
     })
+    
+    return alert('operation reussir!!!!');
 };
 
 
@@ -107,22 +125,36 @@ devises.forEach(devise => {
 form.appendChild(div_devises);  
 const div_operateur=document.createElement("div");
 div_operateur.setAttribute("id","operateur");
-operateurs.forEach(operateur=>{
-    const label_source=document.createElement("label");
-    div_operateur.appendChild(label_source);
-    label_source.textContent= operateur;
-    label_source.setAttribute("id","operateur");
-    const select_source=document.createElement("select");
-    select_source.setAttribute("name",operateur);
-    select_source.setAttribute("id",operateur);
+const label_destin=document.createElement("label");
+    div_operateur.appendChild(label_destin);
+    label_destin.textContent= operateurs[0];
+    label_destin.setAttribute("id","destin");
+    const select_destin=document.createElement("select");
+    select_destin.setAttribute("name",operateurs[0]);
+    select_destin.setAttribute("id",operateurs[0]);
     options.forEach(option=>{
         const option_select=document.createElement("option");
         option_select.setAttribute("value",option);
         option_select.textContent=option;        
-        select_source.appendChild(option_select);
+        select_destin.appendChild(option_select);
     })
-    div_operateur.appendChild(select_source);
-})
+    div_operateur.appendChild(select_destin);
+
+    const label_exped=document.createElement("label");
+    div_operateur.appendChild(label_exped);
+    label_exped.textContent= operateurs[1];
+    label_exped.setAttribute("id","exped");
+    const select_exped=document.createElement("select");
+    select_exped.setAttribute("name",operateurs[1]);
+    select_exped.setAttribute("id",operateurs[1]);
+    options.forEach(option=>{
+        const option_select=document.createElement("option");
+        option_select.setAttribute("value",option);
+        option_select.textContent=option;        
+        select_exped.appendChild(option_select);
+    })
+    div_operateur.appendChild(select_exped);
+
 form.appendChild(div_operateur);
 const bottom=document.createElement("input");
 bottom.setAttribute("type","submit");
@@ -130,10 +162,42 @@ bottom.setAttribute("value","valider");
 form.appendChild(bottom);
 form.addEventListener("submit",function(event){
     event.preventDefault();
-    let somme= input_somme.value;
-   
+    let _somme= input_somme.value;
+    let _devise;
+    div_devises.querySelectorAll("input[type=radio]").forEach(function(radio){
+        if (radio.checked){
+             _devise=radio.value;
+        }
+    })
+    let _destinateur=select_destin.value; 
+    let _expediteur=select_exped.value;
     
+    
+    ajouts_donnees(_somme, _devise, _destinateur, _expediteur);
+    form.reset;
+        
 })
+const div_list=document.createElement("div");
+div_list.setAttribute("class","list");
+divparent.appendChild(div_list);
+const titre_list=document.createElement("h2");
+titre_list.setAttribute("class","titre_list");
+titre_list.textContent="list-operating";
+div_list.appendChild(titre_list);
+const div_box_list=document.createElement("div");
+div_box_list.setAttribute("class","box_list");
+my_data.forEach(function(donnee){
+    const div_item=document.createElement("div");
+    div_item.setAttribute("class","item");
+    const titre_item=document.createElement("h3");
+    titre_item.setAttribute("class","titre_item");
+    titre_item.textContent=donnee.expediteur;
+    div_item.appendChild(titre_item);
+    div_box_list.appendChild(div_item);
+
+})
+div_list.appendChild(div_box_list);
+
 
 
 
