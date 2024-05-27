@@ -32,3 +32,32 @@
 #des{
     display: flex;
 }
+.list{
+    margin: 2%;
+    margin-left: 10%;
+    padding: 1%;
+    border: 1px solid black;
+    background-color: rgb(153, 150, 150);
+    color: white;
+    width: 50%;
+    border-radius: 5px;
+}
+.titre_list{
+    text-align: center;
+    padding: 2px;
+}
+.box_list{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    border: 2px solid white;
+}
+.item{
+    margin: 5px ;
+    padding: 5px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+
+}

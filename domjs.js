@@ -67,17 +67,51 @@ function ajouts_donnees(somme,devise,destinateur,expediteur){
             return (donnee.id>max?donnee.id:max);
         },0
     )    
-    my_data.push({
+    my_data.push({ 
     'id':max_id+1,
     'somme':somme,
     'devise':devise,
     'destinateur':destinateur,
     'expediteur':expediteur,
     })
-    
+    recuper_nouveau_donnee(max_id+1)
     return alert('operation reussir!!!!');
 };
+function recuper_nouveau_donnee(id){
+    const nouveau_donnee=my_data.findLast(function(donnee){
+        return donnee.id==id;
+    })
+    const div_item=document.createElement("div");
+    div_item.setAttribute("class","item");
+    const titre_item=document.createElement("h3");
+    titre_item.setAttribute("class","titre_item");
+    titre_item.textContent="Exp:"+nouveau_donnee.expediteur;
+    div_item.appendChild(titre_item);
+    const titre_item_desti=document.createElement("h3");
+    titre_item_desti.setAttribute ("class","titre_item");
+    titre_item_desti.textContent="Dest:"+nouveau_donnee.destinateur;
+    div_item.appendChild(titre_item_desti);
+    const titre_item_somme=document.createElement("h4");
+    titre_item_somme.setAttribute("class","titre_item");
+    titre_item_somme.textContent="Somme:"+nouveau_donnee.somme;
+    div_item.appendChild(titre_item_somme);
+    div_box_list.appendChild(div_item);
 
+    const input_update=document.createElement("button")
+    input_update.setAttribute("class","update");
+    input_update.setAttribute("id","update");
+    input_update.addEventListener("click",update_item);
+    input_update.textContent="Modifier"
+    const input_delete=document.createElement("button");
+    input_delete.setAttribute("class","delete");
+    input_delete.setAttribute("id","delete");
+    input_delete.addEventListener("click",delete_item);
+    input_delete.textContent="Supprimer";
+     
+    div_item.appendChild(input_update);
+    div_item.appendChild(input_delete);
+
+}
 
 
 
@@ -177,6 +211,12 @@ form.addEventListener("submit",function(event){
     form.reset;
         
 })
+function update_item(){
+    return null
+}
+function delete_item(){
+    return null
+}
 const div_list=document.createElement("div");
 div_list.setAttribute("class","list");
 divparent.appendChild(div_list);
@@ -191,12 +231,34 @@ my_data.forEach(function(donnee){
     div_item.setAttribute("class","item");
     const titre_item=document.createElement("h3");
     titre_item.setAttribute("class","titre_item");
-    titre_item.textContent=donnee.expediteur;
+    titre_item.textContent="Exp:"+donnee.expediteur;
     div_item.appendChild(titre_item);
+    const titre_item_desti=document.createElement("h3");
+    titre_item_desti.setAttribute ("class","titre_item");
+    titre_item_desti.textContent="Dest:"+donnee.destinateur;
+    div_item.appendChild(titre_item_desti);
+    const titre_item_somme=document.createElement("h4");
+    titre_item_somme.setAttribute("class","titre_item");
+    titre_item_somme.textContent="Somme:"+donnee.somme;
+    const input_update=document.createElement("button")
+    input_update.setAttribute("class","update");
+    input_update.setAttribute("id","update");
+    input_update.addEventListener("click",update_item);
+    input_update.textContent="Modifier"
+    const input_delete=document.createElement("button");
+    input_delete.setAttribute("class","delete");
+    input_delete.setAttribute("id","delete");
+    input_delete.addEventListener("click",delete_item);
+    input_delete.textContent="Supprimer";
+    div_item.appendChild(titre_item_somme);
+    div_item.appendChild(input_update);
+    div_item.appendChild(input_delete);
     div_box_list.appendChild(div_item);
+    
 
 })
 div_list.appendChild(div_box_list);
+
 
 
 
