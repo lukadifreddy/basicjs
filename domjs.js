@@ -83,6 +83,7 @@ function recuper_nouveau_donnee(id){
     })
     const div_item=document.createElement("div");
     div_item.setAttribute("class","item");
+    div_item.setAttribute("id",nouveau_donnee.id);
     const titre_item=document.createElement("h3");
     titre_item.setAttribute("class","titre_item");
     titre_item.textContent="Exp:"+nouveau_donnee.expediteur;
@@ -211,12 +212,20 @@ form.addEventListener("submit",function(event){
     form.reset;
         
 })
-function update_item(){
+function update_item(event){
+    
     return null
 }
-function delete_item(){
-    return null
+function delete_item(event){
+    const del_item= event.target.parentNode;
+    const index=my_data.findIndex(function(item){
+        return item.id==del_item.id;
+    });
+    my_data.splice(index,1);
+    console.log(my_data);
+    return del_item.remove();
 }
+
 const div_list=document.createElement("div");
 div_list.setAttribute("class","list");
 divparent.appendChild(div_list);
@@ -229,6 +238,7 @@ div_box_list.setAttribute("class","box_list");
 my_data.forEach(function(donnee){
     const div_item=document.createElement("div");
     div_item.setAttribute("class","item");
+    div_item.setAttribute("id",donnee.id);
     const titre_item=document.createElement("h3");
     titre_item.setAttribute("class","titre_item");
     titre_item.textContent="Exp:"+donnee.expediteur;
