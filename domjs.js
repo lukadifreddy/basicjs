@@ -1,3 +1,4 @@
+let etat=true;
 const operateurs=['DESTINATEUR','EXPEDITEUR'];
 const devises=['USD','CDF'];
 const options=["zando","kintambo","bandal","masina","limete"];
@@ -128,8 +129,11 @@ function recup_item(event){
          radio.checked=true;
         }
     }) 
-    
 
+   //la recuperation expediteur
+    select_destin.value=recup.destinateur;
+    select_exped.value=recup.expediteur;
+    etat=false;
     return null
 }
 function delete_item(event){
