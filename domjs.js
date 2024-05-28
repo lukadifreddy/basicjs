@@ -6,19 +6,19 @@ let cash_usd=1000000000000;
 const my_data=[{
     'id':1,
     'somme':10000,
-    'devise':"cdf",
+    'devise':"CDF",
     'destinateur':"zando",
     'expediteur':"kintambo",
 },{
     'id':2,
     'somme':10000,
-    'devise':"usd",
+    'devise':"USD",
     'destinateur':"masina",
     'expediteur':"limete",
 },{
     'id':3,
     'somme':10000,
-    'devise':"usd",
+    'devise':"USD",
     'destinateur':"bandal",
     'expediteur':"kintambo",
 }];
@@ -101,7 +101,7 @@ function recuper_nouveau_donnee(id){
     const input_update=document.createElement("button")
     input_update.setAttribute("class","update");
     input_update.setAttribute("id","update");
-    input_update.addEventListener("click",update_item);
+    input_update.addEventListener("click",recup_item);
     input_update.textContent="Modifier"
     const input_delete=document.createElement("button");
     input_delete.setAttribute("class","delete");
@@ -112,6 +112,34 @@ function recuper_nouveau_donnee(id){
     div_item.appendChild(input_update);
     div_item.appendChild(input_delete);
 
+}
+function recup_item(event){
+    const up_item=event.target.parentNode;
+    const recup=my_data.find(function(item){
+        
+        return item.id==up_item.id;
+
+    })
+    const mon_input_somme=document.getElementById("somme");
+    mon_input_somme.value=recup.somme;
+   // la recuperation de la devise
+   div_devises.querySelectorAll("input[type=radio]").forEach(function(radio){
+    if (radio.value == recup.devise){
+         radio.checked=true;
+        }
+    }) 
+    
+
+    return null
+}
+function delete_item(event){
+    const del_item= event.target.parentNode;
+    const index=my_data.findIndex(function(item){
+        return item.id==del_item.id;
+    });
+    my_data.splice(index,1);
+    console.log(my_data);
+    return del_item.remove();
 }
 
 
@@ -212,19 +240,8 @@ form.addEventListener("submit",function(event){
     form.reset;
         
 })
-function update_item(event){
-    
-    return null
-}
-function delete_item(event){
-    const del_item= event.target.parentNode;
-    const index=my_data.findIndex(function(item){
-        return item.id==del_item.id;
-    });
-    my_data.splice(index,1);
-    console.log(my_data);
-    return del_item.remove();
-}
+
+
 
 const div_list=document.createElement("div");
 div_list.setAttribute("class","list");
@@ -249,11 +266,11 @@ my_data.forEach(function(donnee){
     div_item.appendChild(titre_item_desti);
     const titre_item_somme=document.createElement("h4");
     titre_item_somme.setAttribute("class","titre_item");
-    titre_item_somme.textContent="Somme:"+donnee.somme;
+    titre_item_somme.textContent="Somme:"+donnee.somme+" "+donnee.devise;
     const input_update=document.createElement("button")
     input_update.setAttribute("class","update");
     input_update.setAttribute("id","update");
-    input_update.addEventListener("click",update_item);
+    input_update.addEventListener("click",recup_item);
     input_update.textContent="Modifier"
     const input_delete=document.createElement("button");
     input_delete.setAttribute("class","delete");
