@@ -1,4 +1,5 @@
 let etat=true;
+let index_item;
 const operateurs=['DESTINATEUR','EXPEDITEUR'];
 const devises=['USD','CDF'];
 const options=["zando","kintambo","bandal","masina","limete"];
@@ -133,9 +134,97 @@ function recup_item(event){
    //la recuperation expediteur
     select_destin.value=recup.destinateur;
     select_exped.value=recup.expediteur;
-    etat=false;
-    return null
+    index_item=recup.id;    
+    etat=false;    
+    return etat;
+
+    
 }
+// la modification de l'item
+function update(){
+    
+    const index=my_data.findIndex(function (item){
+        return item.id==index_item;
+    })
+    let _somme= input_somme.value;
+    let _devise;
+    div_devises.querySelectorAll("input[type=radio]").forEach(function(radio){
+        if (radio.checked){
+             _devise=radio.value;
+        }
+    })
+    let _destinateur=select_destin.value; 
+    let _expediteur=select_exped.value;
+    my_data[index]={"id":index_item, "somme":_somme, "devise":_devise, "destinateur":_destinateur, "expediteur":_expediteur};
+    console.log(my_data);
+    div_box_list.replaceChildren();
+    etat=true;
+    my_data.forEach(function(donnee){
+        const div_item=document.createElement("div");
+        div_item.setAttribute("class","item");
+        div_item.setAttribute("id",donnee.id);
+        const titre_item=document.createElement("h3");
+        titre_item.setAttribute("class","titre_item");
+        titre_item.textContent="Exp:"+donnee.expediteur;
+        div_item.appendChild(titre_item);
+        const titre_item_desti=document.createElement("h3");
+        titre_item_desti.setAttribute ("class","titre_item");
+        titre_item_desti.textContent="Dest:"+donnee.destinateur;
+        div_item.appendChild(titre_item_desti);
+        const titre_item_somme=document.createElement("h4");
+        titre_item_somme.setAttribute("class","titre_item");
+        titre_item_somme.textContent="Somme:"+donnee.somme+" "+donnee.devise;
+        const input_update=document.createElement("button")
+        input_update.setAttribute("class","update");
+        input_update.setAttribute("id","update");
+        input_update.addEventListener("click",recup_item);
+        input_update.textContent="Modifier"
+        const input_delete=document.createElement("button");
+        input_delete.setAttribute("class","delete");
+        input_delete.setAttribute("id","delete");
+        input_delete.addEventListener("click",delete_item);
+        input_delete.textContent="Supprimer";
+        div_item.appendChild(titre_item_somme);
+        div_item.appendChild(input_update);
+        div_item.appendChild(input_delete);
+        div_box_list.appendChild(div_item);      
+    
+    })
+    alert("modification effectuer avec succès par freddy et Monsieur belamard");
+    return etat
+}
+//
+function recup_dev(){
+    
+    let _somme= input_somme.value;
+    let _devise;
+    div_devises.querySelectorAll("input[type=radio]").forEach(function(radio){
+        if (radio.checked){
+             _devise=radio.value;
+        }
+    })
+    let _destinateur=select_destin.value; 
+    let _expediteur=select_exped.value;
+    
+    
+    ajouts_donnees(_somme, _devise, _destinateur, _expediteur);
+    form.reset;
+        
+}
+//    
+function intermediare(event){    
+    event.preventDefault(); 
+    if (etat){  
+           
+       recup_dev();        
+    }else{
+         
+        update();
+    }
+
+
+} 
+// la suppression de l'item
 function delete_item(event){
     const del_item= event.target.parentNode;
     const index=my_data.findIndex(function(item){
@@ -227,23 +316,9 @@ const bottom=document.createElement("input");
 bottom.setAttribute("type","submit");
 bottom.setAttribute("value","valider");
 form.appendChild(bottom);
-form.addEventListener("submit",function(event){
-    event.preventDefault();
-    let _somme= input_somme.value;
-    let _devise;
-    div_devises.querySelectorAll("input[type=radio]").forEach(function(radio){
-        if (radio.checked){
-             _devise=radio.value;
-        }
-    })
-    let _destinateur=select_destin.value; 
-    let _expediteur=select_exped.value;
-    
-    
-    ajouts_donnees(_somme, _devise, _destinateur, _expediteur);
-    form.reset;
-        
-})
+form.addEventListener("submit",intermediare);
+
+
 
 
 
