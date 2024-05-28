@@ -4,7 +4,7 @@
   "main": "domjs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"domjs.js"
+    "start": "domjs.js"
   },
   "keywords": [],
   "author": "",
